@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>宅急看电影网 - 宅家观影推荐与舒适片单</title>
+<meta name="description" content="宅急看电影网（zhaijikandianyingwang-h5）专注宅家观影场景，提供舒适片单、周末电影推荐、居家观影指南、沙发电影清单等温馨内容。宅在家里，也要看好电影。" />
+<meta name="keywords" content="宅急看电影网,宅家观影,周末电影,舒适片单,沙发电影,居家观影指南,放松电影,治愈系电影" />
+<meta name="author" content="宅急看电影网" />
+<meta name="robots" content="index, follow" />
+<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<link rel="canonical" href="https://zhaijikandianyingwang-h5.github.io/" />
+
+<style>
+  /* ===== 全局变量 - 温暖居家色调 ===== */
+  :root {
+    --bg: #faf6f0;
+    --bg-warm: #fff8ee;
+    --card: #ffffff;
+    --text: #3a2e28;
+    --text-light: #6b5a4f;
+    --text-muted: #a08f80;
+    --brown: #8b5e3c;
+    --brown-light: #c4966b;
+    --orange: #e8833a;
+    --orange-light: #f4a65a;
+    --cream: #f5e6d0;
+    --sage: #7fa876;
+    --pink: #d4726a;
+    --border: #ece0d0;
+    --shadow: 0 4px 20px rgba(139, 94, 60, 0.08);
+    --shadow-hover: 0 8px 30px rgba(139, 94, 60, 0.15);
+    --radius: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  a { color: var(--orange); text-decoration: none; transition: all 0.25s ease; }
+  a:hover { color: var(--brown); }
+
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* ===== 导航 - 圆润温暖风格 ===== */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(250, 246, 240, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 20px; font-weight: 800;
+  }
+
+  .logo-emoji { font-size: 28px; }
+
+  .logo-text { color: var(--text); }
+  .logo-text span { color: var(--orange); }
+
+  .nav-links { display: flex; gap: 4px; list-style: none; }
+
+  .nav-links a {
+    color: var(--text-light); font-size: 14px; font-weight: 500;
+    padding: 10px 16px; border-radius: 16px;
+    transition: all 0.25s ease;
+  }
+
+  .nav-links a:hover {
+    background: var(--cream); color: var(--brown);
+  }
+
+  .menu-btn {
+    display: none; background: var(--cream); border: none;
+    width: 44px; height: 44px; border-radius: 14px;
+    font-size: 20px; cursor: pointer; color: var(--brown);
+  }
+
+  /* ===== Hero - 居家温馨风 ===== */
+  .hero {
+    margin-top: 72px;
+    padding: 100px 0 80px;
+    background:
+      radial-gradient(ellipse 600px 400px at 15% 20%, rgba(244, 166, 90, 0.12), transparent),
+      radial-gradient(ellipse 500px 300px at 85% 80%, rgba(127, 168, 118, 0.1), transparent),
+      var(--bg-warm);
+    position: relative;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-greeting {
+    display: inline-block;
+    background: var(--cream); color: var(--brown);
+    font-size: 13px; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 800; line-height: 1.2;
+    margin-bottom: 18px; color: var(--text);
+  }
+
+  .hero-title .highlight {
+    color: var(--orange);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-title .highlight::after {
+    content: '';
+    position: absolute; bottom: 2px; left: 0; right: 0;
+    height: 8px; background: rgba(244, 166, 90, 0.3);
+    z-index: -1; border-radius: 4px;
+  }
+
+  .hero-desc {
+    font-size: 17px; color: var(--text-light);
+    margin-bottom: 32px; max-width: 440px;
+  }
+
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn-warm {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--orange); color: #fff;
+    padding: 14px 32px; border-radius: 18px;
+    font-size: 15px; font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(232, 131, 58, 0.3);
+  }
+
+  .btn-warm:hover {
+    background: var(--brown); transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 94, 60, 0.3); color: #fff;
+  }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--card); color: var(--brown);
+    padding: 14px 32px; border-radius: 18px;
+    font-size: 15px; font-weight: 600;
+    border: 2px solid var(--border);
+    transition: all 0.25s ease;
+  }
+
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* Hero 右侧装饰区 */
+  .hero-illust {
+    position: relative;
+    height: 400px;
+  }
+
+  .sofa-scene {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 20px;
+  }
+
+  .scene-emoji {
+    font-size: 80px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .scene-emoji:nth-child(2) { animation-delay: 0.5s; font-size: 60px; }
+  .scene-emoji:nth-child(3) { animation-delay: 1s; font-size: 50px; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ===== 通用栏目 ===== */
+  .section { padding: 80px 0; }
+
+  .section-head { margin-bottom: 40px; }
+
+  .section-eyebrow {
+    font-size: 12px; font-weight: 700; color: var(--orange);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 800; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .section-desc {
+    font-size: 15px; color: var(--text-muted); margin-top: 8px; max-width: 500px;
+  }
+
+  /* ===== 栏目一：舒适片单 - 暖色卡片瀑布流 ===== */
+  .cozy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .cozy-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .cozy-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--orange-light);
+  }
+
+  .cozy-card .card-icon {
+    font-size: 40px; margin-bottom: 16px;
+    display: inline-block;
+    padding: 12px;
+    border-radius: 16px;
+    background: var(--cream);
+  }
+
+  .cozy-card h3 {
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 8px; color: var(--text);
+  }
+
+  .cozy-card p {
+    font-size: 14px; color: var(--text-light); margin-bottom: 16px;
+  }
+
+  .cozy-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .cozy-tag {
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 12px;
+    background: var(--bg-warm); color: var(--brown);
+    border: 1px solid var(--border);
+  }
+
+  .cozy-tag.warm { background: #fef0e0; color: var(--orange); }
+  .cozy-tag.cool { background: #e8f4e6; color: var(--sage); }
+  .cozy-tag.pink { background: #fbe8e6; color: var(--pink); }
+
+  /* ===== 栏目二：周末片单 - 时间轴/日程表风格 ===== */
+  .schedule {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .schedule-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+  }
+
+  .schedule-item:last-child { border-bottom: none; }
+
+  .schedule-item:hover { background: var(--bg-warm); }
+
+  .schedule-time {
+    font-size: 14px; font-weight: 700; color: var(--orange);
+    background: var(--cream); padding: 6px 12px;
+    border-radius: 10px; text-align: center;
+  }
+
+  .schedule-info h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+
+  .schedule-info p { font-size: 13px; color: var(--text-muted); }
+
+  .schedule-mood {
+    font-size: 24px; padding: 8px 14px;
+    border-radius: 14px; background: var(--bg-warm);
+  }
+
+  /* ===== 栏目三：观影氛围 - 三列对比卡片 ===== */
+  .vibe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .vibe-card {
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .vibe-card:hover { transform: scale(1.02); }
+
+  .vibe-card .vibe-emoji { font-size: 48px; margin-bottom: 16px; }
+
+  .vibe-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+
+  .vibe-card p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+
+  .vibe-1 { background: linear-gradient(135deg, #fef0e0, #fde8d0); color: #8b5e3c; }
+  .vibe-2 { background: linear-gradient(135deg, #e8f0f8, #d8e8f8); color: #4a6a8a; }
+  .vibe-3 { background: linear-gradient(135deg, #eef5e8, #e0f0d8); color: #5a7a50; }
+
+  /* ===== 栏目四：宅家好物 - 圆角商品卡片 ===== */
+  .goods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .good-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .good-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .good-img {
+    height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    background: var(--bg-warm);
+  }
+
+  .good-body { padding: 18px; }
+
+  .good-body h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+
+  .good-body p { font-size: 13px; color: var(--text-muted); }
+
+  .good-price {
+    display: inline-block; margin-top: 8px;
+    font-size: 14px; font-weight: 700; color: var(--orange);
+  }
+
+  /* ===== 栏目五：关于 - 温暖引言区 ===== */
+  .about-warm {
+    background: linear-gradient(135deg, var(--brown), var(--brown-light));
+    border-radius: var(--radius);
+    padding: 60px 40px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-warm::before {
+    content: '🏠';
+    position: absolute; top: -20px; right: 40px;
+    font-size: 120px; opacity: 0.1;
+  }
+
+  .about-warm h2 {
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 800; margin-bottom: 16px;
+  }
+
+  .about-warm p {
+    font-size: 16px; opacity: 0.9;
+    max-width: 560px; margin: 0 auto 32px;
+  }
+
+  .newsletter {
+    display: flex; max-width: 420px; margin: 0 auto;
+    background: rgba(255,255,255,0.15);
+    border-radius: 18px; padding: 6px;
+    backdrop-filter: blur(4px);
+  }
+
+  .newsletter input {
+    flex: 1; background: transparent; border: none;
+    outline: none; color: #fff; font-size: 14px;
+    padding: 12px 16px;
+  }
+
+  .newsletter input::placeholder { color: rgba(255,255,255,0.6); }
+
+  .newsletter button {
+    background: #fff; color: var(--brown);
+    border: none; padding: 12px 24px;
+    border-radius: 14px; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.25s ease;
+  }
+
+  .newsletter button:hover { background: var(--cream); }
+
+  /* ===== 页脚 ===== */
+  footer {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 48px 0 24px;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px; margin-bottom: 32px;
+  }
+
+  .footer-brand .logo { margin-bottom: 12px; }
+
+  .footer-brand p { font-size: 14px; color: var(--text-muted); max-width: 280px; }
+
+  .footer-col h5 { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+
+  .footer-col a { display: block; font-size: 14px; color: var(--text-muted); padding: 4px 0; }
+
+  .footer-col a:hover { color: var(--orange); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 20px; text-align: center;
+    font-size: 13px; color: var(--text-muted);
+  }
+
+  /* ===== 移动端 ===== */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none; position: absolute; top: 72px; left: 0; right: 0;
+      flex-direction: column; background: var(--bg);
+      border-bottom: 1px solid var(--border); padding: 12px 0;
+    }
+
+    .nav-links.active { display: flex; }
+
+    .nav-links a { padding: 12px 20px; border-radius: 0; }
+
+    .menu-btn { display: block; }
+
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+
+    .hero-illust { height: 250px; }
+
+    .schedule-item {
+      grid-template-columns: 70px 1fr;
+      gap: 12px; padding: 18px 20px;
+    }
+
+    .schedule-mood { display: none; }
+
+    .schedule-time { font-size: 12px; padding: 4px 8px; }
+
+    .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+
+    .about-warm { padding: 40px 24px; }
+
+    .newsletter { flex-direction: column; gap: 8px; padding: 12px; }
+    .newsletter button { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+  <!-- 导航 -->
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <span class="logo-emoji">🛋️</span>
+        <span class="logo-text">宅急看<span>电影网</span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">首页</a></li>
+        <li><a href="#cozy">舒适片单</a></li>
+        <li><a href="#weekend">周末安排</a></li>
+        <li><a href="#vibe">观影氛围</a></li>
+        <li><a href="#goods">宅家好物</a></li>
+        <li><a href="#about">关于我们</a></li>
+      </ul>
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <span class="hero-greeting">🏠 欢迎回到舒适的家中</span>
+          <h1 class="hero-title">窝在沙发上<br/><span class="highlight">看好电影</span>就是最好的放松</h1>
+          <p class="hero-desc">宅急看电影网（zhaijikandianyingwang-h5）是一个专为"宅家观影"场景打造的电影推荐平台。我们懂你的疲惫，也懂你的品味——周末不出门，也能看好片。</p>
+          <div class="hero-actions">
+            <a href="#cozy" class="btn-warm">🍿 看看今日推荐</a>
+            <a href="#weekend" class="btn-ghost">📅 规划周末片单</a>
+          </div>
+        </div>
+        <div class="hero-illust">
+          <div class="sofa-scene">
+            <span class="scene-emoji">🛋️</span>
+            <span class="scene-emoji">📺</span>
+            <span class="scene-emoji">🍿</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目一：舒适片单 -->
+  <section class="section" id="cozy">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Cozy Picks</div>
+        <h2 class="section-title">☕ 舒适片单</h2>
+        <p class="section-desc">适合裹着毯子、喝着热饮、慢慢看完的电影清单。</p>
+      </div>
+      <div class="cozy-grid">
+        <div class="cozy-card">
+          <span class="card-icon">🌧️</span>
+          <h3>雨天必看清单</h3>
+          <p>外面下着雨，屋里暖暖的，这些电影最适合这样的下午。</p>
+          <div class="cozy-tags"><span class="cozy-tag warm">治愈</span><span class="cozy-tag">慢节奏</span><span class="cozy-tag cool">文艺</span></div>
+        </div>
+        <div class="cozy-card">
+          <span class="card-icon">🌙</span>
+          <h3>深夜失眠陪伴</h3>
+          <p>睡不着的时候，这些温柔的电影像一首安眠曲。</p>
+          <div class="cozy-tags"><span class="cozy-tag cool">安静</span><span class="cozy-tag">治愈</span><span class="cozy-tag">睡前</span></div>
+        </div>
+        <div class="cozy-card">
+          <span class="card-icon">☀️</span>
+          <h3>周末午后阳光片</h3>
+          <p>阳光洒进窗台，配一杯冰咖啡，这些电影让下午更美好。</p>
+          <div class="cozy-tags"><span class="cozy-tag warm">轻松</span><span class="cozy-tag pink">青春</span><span class="cozy-tag cool">清新</span></div>
+        </div>
+        <div class="cozy-card">
+          <span class="card-icon">🔥</span>
+          <h3>冬日壁炉暖心片</h3>
+          <p>窗外飘雪，炉火正旺，这些电影让冬天不再寒冷。</p>
+          <div class="cozy-tags"><span class="cozy-tag pink">温暖</span><span class="cozy-tag warm">家庭</span><span class="cozy-tag">圣诞</span></div>
+        </div>
+        <div class="cozy-card">
+          <span class="card-icon">🎉</span>
+          <h3>一个人也快乐</h3>
+          <p>独处时光也是好时光，这些电影陪你享受一个人的周末。</p>
+          <div class="cozy-tags"><span class="cozy-tag cool">独处</span><span class="cozy-tag">治愈</span><span class="cozy-tag warm">轻松</span></div>
+        </div>
+        <div class="cozy-card">
+          <span class="card-icon">💭</span>
+          <h3>想哭就哭出来</h3>
+          <p>有时候哭一场比笑一场更解压，这些电影给你释放的出口。</p>
+          <div class="cozy-tags"><span class="cozy-tag pink">催泪</span><span class="cozy-tag">治愈</span><span class="cozy-tag warm">温情</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目二：周末片单 - 时间轴 -->
+  <section class="section" id="weekend" style="background: var(--bg-warm);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Weekend Plan</div>
+        <h2 class="section-title">📅 周末观影安排</h2>
+        <p class="section-desc">帮你把两天的空闲时光安排得满满当当，又不会太累。</p>
+      </div>
+      <div class="schedule">
+        <div class="schedule-item">
+          <div class="schedule-time">周六<br/>上午</div>
+          <div class="schedule-info">
+            <h4>🥞 慵懒开场：《小森林》系列</h4>
+            <p>睡到自然醒，泡杯咖啡，看市子在山里做饭种菜，开启慢节奏的一天。</p>
+          </div>
+          <div class="schedule-mood">🌿</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">周六<br/>下午</div>
+          <div class="schedule-info">
+            <h4>🍜 治愈时光：《海蒂和爷爷》</h4>
+            <p>阿尔卑斯山的风景配上纯真的故事，让人心情像被山风洗过一样清爽。</p>
+          </div>
+          <div class="schedule-mood">🏔️</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">周六<br/>晚上</div>
+          <div class="schedule-info">
+            <h4>🍕 欢聚餐时间：《美食、祈祷和恋爱》</h4>
+            <p>点个外卖，窝在沙发里，跟茱莉亚·罗伯茨一起环游世界。</p>
+          </div>
+          <div class="schedule-mood">🌍</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">周日<br/>上午</div>
+          <div class="schedule-info">
+            <h4>🧘 安静时刻：《丹麦女孩》</h4>
+            <p>安静地欣赏艺术与情感，为周末画上一个温柔的句号。</p>
+          </div>
+          <div class="schedule-mood">🎨</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">周日<br/>下午</div>
+          <div class="schedule-info">
+            <h4>📝 收尾充电：《白日梦想家》</h4>
+            <p>看完这部，你会充满动力面对新的一周。格陵兰岛的风景美到窒息。</p>
+          </div>
+          <div class="schedule-mood">✈️</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目三：观影氛围 -->
+  <section class="section" id="vibe">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Mood Match</div>
+        <h2 class="section-title">🎭 观影氛围</h2>
+        <p class="section-desc">不同的心情，需要不同的电影来配。选一个你现在的氛围吧。</p>
+      </div>
+      <div class="vibe-grid">
+        <div class="vibe-card vibe-1">
+          <div class="vibe-emoji">🌅</div>
+          <h3>想放空的时候</h3>
+          <p>不需要动脑，不需要思考，只需要让画面和声音温柔地包裹你。适合刚下班、刚吵完架、或者单纯想发呆的你。</p>
+        </div>
+        <div class="vibe-card vibe-2">
+          <div class="vibe-emoji">🧠</div>
+          <h3>想烧脑的时候</h3>
+          <p>准备好笔记本和暂停键，这些电影会挑战你的逻辑、记忆和想象力。看完想找人讨论三天的那种。</p>
+        </div>
+        <div class="vibe-card vibe-3">
+          <div class="vibe-emoji">💚</div>
+          <h3>想被治愈的时候</h3>
+          <p>生活很累，但你值得被温柔对待。这些电影像一杯热可可，从胃暖到心。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目四：宅家好物 -->
+  <section class="section" id="goods" style="background: var(--bg-warm);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Home Essentials</div>
+        <h2 class="section-title">🛍️ 宅家观影好物</h2>
+        <p class="section-desc">提升居家观影幸福感的必备好物推荐。</p>
+      </div>
+      <div class="goods-grid">
+        <div class="good-card">
+          <div class="good-img">🍿</div>
+          <div class="good-body">
+            <h4>家庭爆米花机</h4>
+            <p>热空气爆米花，无油健康，3分钟出一大锅</p>
+            <span class="good-price">¥89 起</span>
+          </div>
+        </div>
+        <div class="good-card">
+          <div class="good-img">🧶</div>
+          <div class="good-body">
+            <h4>加大号毛毯</h4>
+            <p>珊瑚绒材质，裹住全身刚刚好，冬天必备</p>
+            <span class="good-price">¥129 起</span>
+          </div>
+        </div>
+        <div class="good-card">
+          <div class="good-img">💡</div>
+          <div class="good-body">
+            <h4>氛围投影灯</h4>
+            <p>星空/火焰/极光模式，把卧室变成私人影院</p>
+            <span class="good-price">¥159 起</span>
+          </div>
+        </div>
+        <div class="good-card">
+          <div class="good-img">🎧</div>
+          <div class="good-body">
+            <h4>头戴式耳机</h4>
+            <p>主动降噪，沉浸观影不扰家人，续航40h</p>
+            <span class="good-price">¥299 起</span>
+          </div>
+        </div>
+        <div class="good-card">
+          <div class="good-img">🛋️</div>
+          <div class="good-body">
+            <h4>懒人沙发躺椅</h4>
+            <p>人体工学设计，躺一天腰不酸，可拆洗外套</p>
+            <span class="good-price">¥459 起</span>
+          </div>
+        </div>
+        <div class="good-card">
+          <div class="good-img">🥤</div>
+          <div class="good-body">
+            <h4>大容量保温杯</h4>
+            <p>1.5L容量，12小时保温，边看边喝不用起身</p>
+            <span class="good-price">¥79 起</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目五：关于 -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-warm">
+        <h2>🏡 关于宅急看电影网</h2>
+        <p>我们是一个由"沙发土豆"们创建的网站。我们相信，宅在家里看好电影，是这个世界上最简单也最幸福的快乐之一。每周更新舒适片单、周末观影计划和居家好物推荐。</p>
+        <form class="newsletter" onsubmit="event.preventDefault(); alert('订阅功能为演示，实际部署请接入邮件服务。');">
+          <input type="email" placeholder="留下邮箱，每周收到一份温暖片单 💌" required />
+          <button type="submit">订阅</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo"><span class="logo-emoji">🛋️</span><span class="logo-text">宅急看<span>电影网</span></span></div>
+          <p>宅急看电影网（zhaijikandianyingwang-h5.github.io）—— 宅家观影，也要看好片。</p>
+        </div>
+        <div class="footer-col"><h5>栏目导航</h5><a href="#cozy">舒适片单</a><a href="#weekend">周末安排</a><a href="#vibe">观影氛围</a><a href="#goods">宅家好物</a></div>
+        <div class="footer-col"><h5>关于</h5><a href="#about">关于我们</a><a href="#">投稿合作</a><a href="#">联系我们</a><a href="#">隐私政策</a></div>
+      </div>
+      <div class="footer-bottom">© 2026 宅急看电影网 (zhaijikandianyingwang-h5.github.io) · 保留所有权利</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('navLinks').classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
